@@ -33,17 +33,21 @@ knowledge1 = And(
 # A says "We are the same kind."
 # B says "We are of different kinds."
 knowledge2 = And(
+    # A y B son uno u otro, pero no ambos
     Or(AKnight, AKnave),
     Not(And(AKnight, AKnave)),
     Or(BKnight, BKnave),
     Not(And(BKnight, BKnave)),
 
-
+    # A dice: somos del mismo tipo
     Implication(AKnight, Or(And(AKnight, BKnight), And(AKnave, BKnave))),
+    Implication(AKnave, Not(Or(And(AKnight, BKnight), And(AKnave, BKnave)))),
 
-
-    Implication(BKnight, Or(And(AKnight, BKnave), And(AKnave, BKnight)))
+    # B dice: somos diferentes
+    Implication(BKnight, Or(And(AKnight, BKnave), And(AKnave, BKnight))),
+    Implication(BKnave, Not(Or(And(AKnight, BKnave), And(AKnave, BKnight))))
 )
+
 
 # Puzzle 3
 # A says either "I am a knight." or "I am a knave.", but you don't know which.
